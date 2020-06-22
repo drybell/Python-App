@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from config import Config
-from forms.get_document_details import DocumentDetailsForm
+from .forms.get_document_details import DocumentDetailsForm
 # from template import 
 app = Flask(__name__)
 app.config.from_object(Config)
