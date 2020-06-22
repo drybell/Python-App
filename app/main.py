@@ -1,10 +1,12 @@
 from flask import Flask, render_template
+from ..config import Config
 # from template import 
 app = Flask(__name__)
+app.config.from_object(Config)
 
 @app.route("/")
 def home_view():
-	return render_template('base.html', title='Home')
+	return render_template('doc.html', title='Home')
 
 @app.route("/api-calls1")
 def part_studio_contents():
