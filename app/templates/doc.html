@@ -6,15 +6,24 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.did.label }}<br>
-            {{ form.did(size=32) }}
+            {{ form.did(size=32) }}<br>
+            {% for error in form.did.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.wid.label }}<br>
-            {{ form.wid(size=32) }}
+            {{ form.wid(size=32) }}<br>
+            {% for error in form.wid.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.eid.label }}<br>
-            {{ form.eid(size=32) }}
+            {{ form.eid(size=32) }}<br>
+            {% for error in form.eid.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
     </form>

@@ -9,6 +9,11 @@ verify_ssl = true
 flask = "*"
 gunicorn = "*"
 flask-wtf = "*"
+flask-sqlalchemy = "*"
+wheel = "*"
+flask-migrate = "*"
+onshape-client = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

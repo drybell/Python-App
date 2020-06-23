@@ -4,10 +4,21 @@
     </head>
     <body>
         <div>
-          <h2> Home Page </h2>
+          <h2> Onshape App </h2>
+          <a href="/"> Home </a>
           <a href="/api-calls1">Part Studio</a> 
           <a href="/api-calls2">Feature Studio</a>        
         </div>
         <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
     </body>
 </html>
