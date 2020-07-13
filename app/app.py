@@ -5,6 +5,7 @@ from onshape_client.client import Client
 import sys
 import json 
 from .image_onshape import imageToOnshape
+from .image_plot import imageToPlot
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import pathlib
@@ -31,11 +32,17 @@ feature_title = ""
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/uploads/<int:year>/<int:month>/<int:day>/<int:second>/<file>/<int:scale>/<int:thresh>', methods= ['GET'])
+def plot_data(year, month, day, second, file, scale, thresh):
+	file_path = '../uploads/' + year + '/' + month + '/' + day + '/' + second + '/' + file 
+    html, [x,y] = imageToPlot(file_path, scale, thresh)
+    return json.loads({"html": html, "x": x, "y": y})
+
 @app.route("/")
 def home():
 	global did, wid, eid, image_path, feature_title
 	print(did, wid, eid, image_path)
-	imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=75, thresh=150)
+	# imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=75, thresh=150)
 	flash("API call sent")
 	return render_template('base.html', title='Home')
 

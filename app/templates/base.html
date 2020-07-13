@@ -1,13 +1,11 @@
 <html>
     <head>
       <title>Test Page</title>
+      <script src="javascripts/jquery-1.8.3.min.js"></script>
     </head>
     <body>
         <div>
-          <h2> Onshape App </h2>
-          <a href="/"> Home </a>
-          <a href="/api-calls1">Part Studio</a> 
-          <a href="/api-calls2">Feature Studio</a>        
+          <h2> Onshape App </h2> 
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
@@ -20,5 +18,37 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+        <div class="range-wrap">
+          <label>Scale (0-100)</label>
+          <div class="range-value" id="rangeV"></div>
+          <input id="range" type="range" min="0" max="100" value="85" step="1">
+        </div>
+        <div class="range-wrap">
+          <label>Threshold (0-255)</label>
+          <div class="range-value" id="rangeV2"></div>
+          <input id="range2" type="range" min="0" max="255" value="150" step="1">
+        </div>
     </body>
+    <script> 
+        // basically, query the two sliders for scale and thresh. if they get changed
+        // then send api call and output the plot to the page. Submit button to 
+        // send data to onshape 
+        // update_values = () => {
+        //     $.getJSON($SCRIPT_ROOT+"/_stuff",
+        //         function(data) {
+        //             $("#cpuload").text(data.cpu+" %")
+        //             $("#ram").text(data.ram+" %")
+        //             $("#disk").text(data.disk+" %")
+        //         });
+        // }
+        const range = document.getElementById('range'), rangeV = document.getElementById('rangeV'), setValue = () => {
+          const
+            newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+            newPosition = 10 - (newValue * 0.2);
+          rangeV.innerHTML = `<span>${range.value}</span>`;
+          rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+        };
+        document.addEventListener("DOMContentLoaded", setValue);
+        range.addEventListener('input', setValue);
+    </script> 
 </html>
