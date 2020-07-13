@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Document Url Details</h1>
-    <form action="" method="post" novalidate>
+    <h1>Please submit Feature Studio IDs and Image File (png and jpg supported)</h1>
+    <form action="" method="post" novalidate enctype=multipart/form-data>
         {{ form.hidden_tag() }}
         <p>
             {{ form.did.label }}<br>
@@ -25,6 +25,17 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{ form.feature_title.label }}<br>
+            {{ form.feature_title(size=32) }}<br>
+            {% for error in form.feature_title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.image.label }}<br>
+            {{ form.image}}<br>
+        </p> 
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}

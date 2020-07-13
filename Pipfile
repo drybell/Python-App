@@ -14,6 +14,10 @@ wheel = "*"
 flask-migrate = "*"
 onshape-client = "*"
 python-dotenv = "*"
+plotly = "*"
+matplotlib = "*"
+numpy-stl = "*"
+opencv-python = "*"
 
 [requires]
 python_version = "3.7"
