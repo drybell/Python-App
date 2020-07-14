@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import base64
 from io import BytesIO
 import cv2 
 import numpy as np 
+matplotlib.use('Agg')
 
 def imageToPlot(image_path, scale=100, thresh=100):
     fig = plt.figure()
@@ -26,9 +28,11 @@ def imageToPlot(image_path, scale=100, thresh=100):
 
     tmpfile = BytesIO()
     plt.scatter(x,y)
+    plt.plot(x,y)
     fig.savefig(tmpfile, format='png')
+    plt.close(fig)
     encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
 
-    html = '<img src=\'data:image/png;base64,{}\'>'.format(encoded) 
+    html = 'data:image/png;base64,{}'.format(encoded) 
     return [html, [x,y]]
 

@@ -1,7 +1,8 @@
 <html>
     <head>
       <title>Test Page</title>
-      <script src="javascripts/jquery-1.8.3.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>
@@ -18,37 +19,114 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
-        <div class="range-wrap">
-          <label>Scale (0-100)</label>
-          <div class="range-value" id="rangeV"></div>
-          <input id="range" type="range" min="0" max="100" value="85" step="1">
+        <div id="setup" style="display: block;">
+          <div id="starter-image"> 
+            <img id="uploaded" src="{{url_for('send_uploaded_file', filename=value )}}" alt="uploaded image"/>
+          </div>
+          <div id="image-wrapper"> 
+            <p id="image_path" style="display: none"> {{value}} </p> 
+          </div> 
+          <div class="range-wrap">
+            <label>Scale Your Image (0-100)</label>
+            <div class="range-value" id="range"></div>
+            <input id="scale" type="range" min="0" max="100" value="85" step="1">
+          </div>
+          <div class="range-wrap">
+            <label>Threshold of the Image Mask (0-255) </label>
+            <div class="range-value" id="range2"></div>
+            <input id="thresh" type="range" min="0" max="255" value="150" step="1">
+          </div>
+          <button id="submit">Send To Onshape!</button>
+          <h2 id="error" style="display: none;">Request Error. Please navigate back to /details and try again</h2>
         </div>
-        <div class="range-wrap">
-          <label>Threshold (0-255)</label>
-          <div class="range-value" id="rangeV2"></div>
-          <input id="range2" type="range" min="0" max="255" value="150" step="1">
-        </div>
+        <div id="thanks">
+          <h2 id="request-complete" style="display: none;">Request received! Check your Part Studio and the Sketch will be updated!</h2>
+        </div> 
+        <div id="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </body>
     <script> 
-        // basically, query the two sliders for scale and thresh. if they get changed
-        // then send api call and output the plot to the page. Submit button to 
-        // send data to onshape 
-        // update_values = () => {
-        //     $.getJSON($SCRIPT_ROOT+"/_stuff",
-        //         function(data) {
-        //             $("#cpuload").text(data.cpu+" %")
-        //             $("#ram").text(data.ram+" %")
-        //             $("#disk").text(data.disk+" %")
-        //         });
-        // }
-        const range = document.getElementById('range'), rangeV = document.getElementById('rangeV'), setValue = () => {
-          const
-            newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
-            newPosition = 10 - (newValue * 0.2);
-          rangeV.innerHTML = `<span>${range.value}</span>`;
-          rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
-        };
-        document.addEventListener("DOMContentLoaded", setValue);
-        range.addEventListener('input', setValue);
+        var scale = document.getElementById('scale');
+        var thresh = document.getElementById('thresh');
+        var range = document.getElementById('range');
+        var range2 = document.getElementById('range2');
+        var submit = document.getElementById('submit');
+        var setup = document.getElementById('setup');
+        var thanks = document.getElementById('request-complete');
+        var error = document.getElementById('error');
+        var loading = document.getElementById('lds-grid');
+        var rendered = document.getElementById('starter-image');
+        var isloading = false; 
+        var render_image = true;
+
+        loading.style.display = "none";
+
+        document.addEventListener("remove", function(){
+          rendered.style.display = "none";
+        });
+
+        submit.addEventListener('click', function (e) { 
+          e.preventDefault();
+          submit.style.display = "none";
+          isloading = !isloading; 
+          if (isloading){ 
+            loading.style.display = "block";
+          }
+          else{ 
+            loading.style.display = "none";
+          }
+          $.ajax({
+            type: "GET",
+            url: '/sketch/' + scale.value + '/' + thresh.value,
+            success: function(data) {
+              console.log(data.status);
+              if (data.status === 200){ 
+                setup.style.display = "none";
+                thanks.style.display = "block";
+              }
+              else{
+                error.style.display = "block";
+              }
+              loading.style.display = "none";
+            },
+          })
+        }, false);
+
+        scale.addEventListener('input', function () {
+          range.innerHTML = scale.value;
+        }, false);
+
+        scale.addEventListener('change', function () { 
+          callPlot(range.value, range2.value);
+        })
+
+        thresh.addEventListener('input', function () {
+          range2.innerHTML = thresh.value;
+        }, false);
+
+        thresh.addEventListener('change', function () { 
+          callPlot(range.value, range2.value);
+        })
+
+        var image_path = document.getElementById('image_path').innerHTML.slice(2, -1);
+        var elem = document.createElement("img");
+        elem.setAttribute("id", "image-api");
+        document.getElementById("image-wrapper").appendChild(elem);
+
+        callPlot = () => { 
+          if (render_image){
+            var event = new CustomEvent("remove", { "detail": "api has been called" });
+            document.dispatchEvent(event);
+            render_image = false;
+          }
+          $.ajax({
+            type: "GET",
+            url: '/query/' + image_path + '/' + scale.value + '/' + thresh.value,
+            success: function(data) {
+
+              document.getElementById('image-api').setAttribute('src', data.html);
+            },
+          })
+        } 
+
     </script> 
 </html>

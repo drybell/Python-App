@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect
+from flask import Flask, render_template, flash, redirect, jsonify, send_from_directory, url_for 
 from .config import Config
 from .forms.get_document_details import DocumentDetailsForm
 from onshape_client.client import Client
@@ -11,7 +11,7 @@ from datetime import datetime
 import pathlib
 
 # from template import 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./static')
 app.config.from_object(Config)
 
 
@@ -32,19 +32,22 @@ feature_title = ""
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/uploads/<int:year>/<int:month>/<int:day>/<int:second>/<file>/<int:scale>/<int:thresh>', methods= ['GET'])
+@app.route('/query/uploads/<int:year>/<int:month>/<int:day>/<int:second>/<file>/<int:scale>/<int:thresh>', methods= ['GET'])
 def plot_data(year, month, day, second, file, scale, thresh):
-	file_path = '../uploads/' + year + '/' + month + '/' + day + '/' + second + '/' + file 
-    html, [x,y] = imageToPlot(file_path, scale, thresh)
-    return json.loads({"html": html, "x": x, "y": y})
+	file_path = '../uploads/' + str(year) + '/' + str(month) + '/' + str(day) + '/' + str(second) + '/' + file 
+	html, [x,y] = imageToPlot(file_path, scale, thresh)
+	return jsonify({"html": html, "x": x, "y": y})
+
+@app.route('/sketch/<int:scale>/<int:thresh>', methods= ['GET'])
+def send_sketch_onshape(scale, thresh):
+	global did, wid, eid, image_path, feature_title
+	status = imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=scale, thresh=thresh)
+	return jsonify({'status': status})
 
 @app.route("/")
 def home():
-	global did, wid, eid, image_path, feature_title
-	print(did, wid, eid, image_path)
-	# imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=75, thresh=150)
-	flash("API call sent")
-	return render_template('base.html', title='Home')
+	global image_path
+	return render_template('base.html', title='Home', value=image_path[2:])
 
 @app.route("/details", methods=['GET', 'POST'])
 def details():
@@ -57,7 +60,7 @@ def details():
 			test_api_call = test_api_call.replace("did", str(form.did._value()))
 			test_api_call = test_api_call.replace("wid", str(form.wid._value()))
 			test_api_call = test_api_call.replace("eid", str(form.eid._value()))
-			print(base_api_url + test_api_call, file=sys.stderr)
+			# print(base_api_url + test_api_call, file=sys.stderr)
 			feature_title = str(form.feature_title._value())
 			filename = secure_filename(form.image.data.filename)
 			if allowed_file(filename):
@@ -77,17 +80,11 @@ def details():
 			flash("Incorrect IDs and/or file format. Try again")
 			return redirect('/details')
 		did, wid, eid, image_path = (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_upload_path)
-		flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
+		# flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
 		return redirect('/')
 	return render_template('doc.html', title='Details', form=form)
 
-@app.route("/api-calls1")
-def part_studio_contents():
-	return ("<h1> This Page Will Give You Part Studio Details</h1>")
-
-@app.route("/api-calls2")
-def feature_studio_contents():
-	return ("<h1> This Page Will Return Feature Studio Scripts</h1>")
-
-# @app.route("/api-calls3")
-# def 
+@app.route('/<filename>')
+def send_uploaded_file(filename):
+	print(filename, file=sys.stderr)
+	return send_from_directory(app.config['UPLOAD_FOLDER'], filename[9:])

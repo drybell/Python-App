@@ -99,4 +99,5 @@ def imageToOnshape(key, secret, image_path, feature_title, ids=["", "", ""], sca
 			"rejectMicroversionSkew": str(rejectMicroversionSkew)}
 
 	r = client.api_client.request("POST", url=post_api_call, query_params={}, headers=headers, body=body)
+	return r.status
 	# result2 = json.loads(r.data)

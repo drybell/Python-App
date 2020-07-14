@@ -1,41 +1,43 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Please submit Feature Studio IDs and Image File (png and jpg supported)</h1>
-    <form action="" method="post" novalidate enctype=multipart/form-data>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.did.label }}<br>
-            {{ form.did(size=32) }}<br>
-            {% for error in form.did.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.wid.label }}<br>
-            {{ form.wid(size=32) }}<br>
-            {% for error in form.wid.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.eid.label }}<br>
-            {{ form.eid(size=32) }}<br>
-            {% for error in form.eid.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.feature_title.label }}<br>
-            {{ form.feature_title(size=32) }}<br>
-            {% for error in form.feature_title.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.image.label }}<br>
-            {{ form.image}}<br>
-        </p> 
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
+<html>
+    <body> 
+        {% block content %}
+        <h1>Please submit Feature Studio IDs and Image File (png and jpg supported)</h1>
+        <form action="" method="post" novalidate enctype=multipart/form-data>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.did.label }}<br>
+                {{ form.did(size=32) }}<br>
+                {% for error in form.did.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.wid.label }}<br>
+                {{ form.wid(size=32) }}<br>
+                {% for error in form.wid.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.eid.label }}<br>
+                {{ form.eid(size=32) }}<br>
+                {% for error in form.eid.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.feature_title.label }}<br>
+                {{ form.feature_title(size=32) }}<br>
+                {% for error in form.feature_title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.image.label }}<br>
+                {{ form.image}}<br>
+            </p> 
+            <p>{{ form.submit() }}</p>
+        </form>
+        {% endblock %}
+    </body>
+</html>
