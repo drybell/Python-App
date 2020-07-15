@@ -21,10 +21,10 @@
         {% block content %}{% endblock %}
         <div id="setup" style="display: block;">
           <div id="starter-image"> 
-            <img id="uploaded" src="{{url_for('send_uploaded_file', filename=value )}}" alt="uploaded image"/>
+            <img id="uploaded" src="{{value}}" alt="uploaded image"/>
           </div>
           <div id="image-wrapper"> 
-            <p id="image_path" style="display: none"> {{value}} </p> 
+            <p id="image_path" style="display: none"> {{value}}</p> 
           </div> 
           <div class="range-wrap">
             <label>Scale Your Image (0-100)</label>
@@ -107,7 +107,7 @@
           callPlot(range.value, range2.value);
         })
 
-        var image_path = document.getElementById('image_path').innerHTML.slice(2, -1);
+        var image_path = document.getElementById('image_path').innerHTML.slice(8);
         var elem = document.createElement("img");
         elem.setAttribute("id", "image-api");
         document.getElementById("image-wrapper").appendChild(elem);

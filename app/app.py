@@ -34,7 +34,7 @@ def allowed_file(filename):
 
 @app.route('/query/uploads/<int:year>/<int:month>/<int:day>/<int:second>/<file>/<int:scale>/<int:thresh>', methods= ['GET'])
 def plot_data(year, month, day, second, file, scale, thresh):
-	file_path = '../uploads/' + str(year) + '/' + str(month) + '/' + str(day) + '/' + str(second) + '/' + file 
+	file_path = app.config['UPLOAD_FOLDER'] + str(year) + '/' + str(month) + '/' + str(day) + '/' + str(second) + '/' + file 
 	html, [x,y] = imageToPlot(file_path, scale, thresh)
 	return jsonify({"html": html, "x": x, "y": y})
 
@@ -47,7 +47,7 @@ def send_sketch_onshape(scale, thresh):
 @app.route("/")
 def home():
 	global image_path
-	return render_template('base.html', title='Home', value=image_path[2:])
+	return render_template('base.html', title='Home', value=image_path[4:])
 
 @app.route("/details", methods=['GET', 'POST'])
 def details():
@@ -66,14 +66,14 @@ def details():
 			if allowed_file(filename):
 				_now = datetime.now()
 				year, month, day, second = _now.year, _now.month, _now.day, _now.second
-				image_upload_path = app.config['UPLOAD_FOLDER'] + "/" + str(year) + "/" + str(month) + "/" + str(day) + "/" + str(second) + "/" + filename
+				image_upload_path = app.config['UPLOAD_FOLDER'] + str(year) + "/" + str(month) + "/" + str(day) + "/" + str(second) + "/" + filename
 				folders = app.config['UPLOAD_FOLDER'] + "/" + str(year) + "/" + str(month) + "/" + str(day) + "/" + str(second) + "/"
 				pathlib.Path(folders).mkdir(parents=True, exist_ok=True)
 				form.image.data.save(image_upload_path)
 			else:
 				raise Exception
 			r = client.api_client.request('GET', url = base_api_url + test_api_call, query_params={}, headers=headers)
-			x = json.loads(r.data)
+			# x = json.loads(r.data)
 			# print(json.dumps(x, indent=2))
 		except Exception as e: 
 			print(e, file=sys.stderr)
@@ -87,4 +87,4 @@ def details():
 @app.route('/<filename>')
 def send_uploaded_file(filename):
 	print(filename, file=sys.stderr)
-	return send_from_directory(app.config['UPLOAD_FOLDER'], filename[9:])
+	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
