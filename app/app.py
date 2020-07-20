@@ -13,9 +13,9 @@ from oauthlib.oauth2 import WebApplicationClient
 import os 
 
 # from template import 
+print(__name__)
 app = Flask(__name__, static_folder='./static')
 app.config.from_object(Config)
-
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
@@ -54,14 +54,13 @@ def send_sketch_onshape(scale, thresh):
 	status = imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=scale, thresh=thresh)
 	return jsonify({'status': status})
 
-@app.route("/details")
-def home():
+@app.route('/details', methods=['GET'])
+def details():
 	global image_path
 	return render_template('base.html', title='Home', value=image_path[4:])
 
-@app.route("/", methods=['GET', 'POST'])
-@app.route('/index')
-def details():
+@app.route('/')
+def home():
 	form = DocumentDetailsForm()
 	global did,wid,eid,image_path, feature_title
 	if form.validate_on_submit():
@@ -89,7 +88,7 @@ def details():
 		except Exception as e: 
 			print(e, file=sys.stderr)
 			flash("Incorrect IDs and/or file format. Try again")
-			return redirect('/details')
+			return redirect('/')
 		did, wid, eid, image_path = (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_upload_path)
 		# flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
 		return redirect('/details')
@@ -100,6 +99,6 @@ def send_uploaded_file(filename):
 	print(filename, file=sys.stderr)
 	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-if __name__ == "__main__":
-	port = int(os.environ.get('PORT', 5000))
-	app.run(host="0.0.0.0", port=port)
+# if __name__ == "__main__":
+# 	port = int(os.environ.get('PORT', 5000))
+# 	app.run(host="127.0.0.1", port=port, debug=True)
