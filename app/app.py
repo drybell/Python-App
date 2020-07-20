@@ -30,7 +30,7 @@ onshape_headers = {'Accept': 'application/vnd.onshape.v1+json', 'Content-Type': 
 key = app.config['ONSHAPE_API_KEY']
 secret = app.config['ONSHAPE_SECRET_KEY']
 client = Client(configuration={"base_url": base_api_url, "access_key": key, "secret_key": secret})
-oauth_client = WebApplicationClient(app.config['OAUTH_CLIENT_ID'])
+# oauth_client = WebApplicationClient(app.config['OAUTH_CLIENT_ID'])
 
 did = ""
 wid = ""
@@ -59,6 +59,7 @@ def home():
 	return render_template('base.html', title='Home', value=image_path[4:])
 
 @app.route("/", methods=['GET', 'POST'])
+@app.route('/index')
 def details():
 	form = DocumentDetailsForm()
 	global did,wid,eid,image_path, feature_title
