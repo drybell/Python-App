@@ -13,7 +13,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import os 
 
 # from template import 
-print(__name__)
+# print(__name__)
 app = Flask(__name__, static_folder='./static')
 app.config.from_object(Config)
 
@@ -101,4 +101,5 @@ def send_uploaded_file(filename):
 
 if __name__ == "__main__":
 	port = int(os.environ.get('PORT', 5000))
-	app.run(host="127.0.0.1", port=port, debug=True)
+	print(port)
+	app.run(host="127.0.0.1", port=port)
