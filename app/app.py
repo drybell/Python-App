@@ -9,6 +9,7 @@ from .image_plot import imageToPlot
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import pathlib
+from oauthlib.oauth2 import WebApplicationClient
 
 # from template import 
 app = Flask(__name__, static_folder='./static')
@@ -18,10 +19,18 @@ app.config.from_object(Config)
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
 base_api_url = 'https://rogers.onshape.com'
+oauthUrl = 'https://oauth.onshape.com'
+authorizationURL = oauthUrl + "/oauth/authorize"
+tokenUrl = oauthUrl + "/oauth/token"
+userProfileURL = base_api_url + "/api/users/sessioninfo"
+callbackUrl = app.config['OAUTH_CALLBACK_URL']
+
+
 onshape_headers = {'Accept': 'application/vnd.onshape.v1+json', 'Content-Type': 'application/json'}
 key = app.config['ONSHAPE_API_KEY']
 secret = app.config['ONSHAPE_SECRET_KEY']
 client = Client(configuration={"base_url": base_api_url, "access_key": key, "secret_key": secret})
+oauth_client = WebApplicationClient(app.config['OAUTH_CLIENT_ID'])
 
 did = ""
 wid = ""
@@ -44,12 +53,12 @@ def send_sketch_onshape(scale, thresh):
 	status = imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=scale, thresh=thresh)
 	return jsonify({'status': status})
 
-@app.route("/")
+@app.route("/details")
 def home():
 	global image_path
 	return render_template('base.html', title='Home', value=image_path[4:])
 
-@app.route("/details", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def details():
 	form = DocumentDetailsForm()
 	global did,wid,eid,image_path, feature_title
@@ -81,7 +90,7 @@ def details():
 			return redirect('/details')
 		did, wid, eid, image_path = (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_upload_path)
 		# flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
-		return redirect('/')
+		return redirect('/details')
 	return render_template('doc.html', title='Details', form=form)
 
 @app.route('/<filename>')
