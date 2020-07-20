@@ -59,7 +59,7 @@ def details():
 	global image_path
 	return render_template('base.html', title='Home', value=image_path[4:])
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
 	form = DocumentDetailsForm()
 	global did,wid,eid,image_path, feature_title
