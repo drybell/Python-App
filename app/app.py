@@ -25,6 +25,8 @@ authorizationURL = oauthUrl + "/oauth/authorize"
 tokenUrl = oauthUrl + "/oauth/token"
 userProfileURL = base_api_url + "/api/users/sessioninfo"
 callbackUrl = app.config['OAUTH_CALLBACK_URL']
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
 
 onshape_headers = {'Accept': 'application/vnd.onshape.v1+json', 'Content-Type': 'application/json'}
