@@ -4,10 +4,9 @@
       <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>
-          <h2> Onshape App </h2> 
+        <div class='top-bar'>
+          <h1 class='header-text'> Image to Onshape Tool </h1>
         </div>
-        <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -18,7 +17,7 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
-        <div id="setup" style="display: block;">
+        <div id="setup" style="display: flex;">
           <div id="starter-image"> 
             <img id="uploaded" src="{{value}}" alt="uploaded image"/>
           </div>
@@ -26,22 +25,26 @@
             <p id="image_path" style="display: none"> {{value}}</p> 
           </div> 
           <div class="range-wrap">
-            <label>Scale Your Image (0-100)</label>
+            <label class='label-desc'>Scale Your Image (0-100)</label>
             <div class="range-value" id="range"></div>
             <input id="scale" type="range" min="0" max="100" value="85" step="1">
           </div>
           <div class="range-wrap">
-            <label>Threshold of the Image Mask (0-255) </label>
+            <label class='label-desc'>Threshold of the Image Mask (0-255) </label>
             <div class="range-value" id="range2"></div>
             <input id="thresh" type="range" min="0" max="255" value="150" step="1">
           </div>
           <button id="submit">Send To Onshape!</button>
+          <div id="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
           <h2 id="error" style="display: none;">Request Error. Please navigate back to /details and try again</h2>
         </div>
-        <div id="thanks">
-          <h2 id="request-complete" style="display: none;">Request received! Check your Part Studio and the Sketch will be updated!</h2>
+        <div id="thanks" style="display: none;">
+          <h2 id="request-complete">Request received! Check your Part Studio and the Sketch will be updated!</h2>
+          <div class="button-wrap">
+            <a id="back" href="{{ url_for('details') }}">Back</a>
+            <a id="home" href="{{ url_for('home') }}">Home</a>
+          </div>
         </div> 
-        <div id="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/handle_base_logic.js')}}"></script>

@@ -1,43 +1,37 @@
 <html>
+    <head> 
+        <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" type="text/css"/>
+    </head>
     <body> 
         {% block content %}
-        <h1>Please submit Feature Studio IDs and Image File (png and jpg supported)</h1>
-        <form action="" method="post" novalidate enctype=multipart/form-data>
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.did.label }}<br>
-                {{ form.did(size=32) }}<br>
-                {% for error in form.did.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.wid.label }}<br>
-                {{ form.wid(size=32) }}<br>
-                {% for error in form.wid.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.eid.label }}<br>
-                {{ form.eid(size=32) }}<br>
-                {% for error in form.eid.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.feature_title.label }}<br>
-                {{ form.feature_title(size=32) }}<br>
-                {% for error in form.feature_title.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.image.label }}<br>
-                {{ form.image}}<br>
-            </p> 
-            <p>{{ form.submit() }}</p>
-        </form>
+        <div class='top-bar'>
+            <h1 class='header-text'> Image to Onshape Tool </h1>
+        </div>
+        <div class='form-wrapper'>
+            <form class='fill-out-form' action="" method="post" novalidate enctype=multipart/form-data>
+                {{ form.hidden_tag() }}
+                <h2 class='info'>Please submit URL of your Feature Studio and an Image File (png and jpg supported)</h1>
+                <p class='Input'>
+                    {{ form.url.label }}<br>
+                    {{ form.url(class_='Input-text') }}<br>
+                    {% for error in form.url.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p class='Input'>
+                    {{ form.feature_title.label }}<br>
+                    {{ form.feature_title(class_='Input-text')}}<br>
+                    {% for error in form.feature_title.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <div class='form-button'>
+                    {{ form.image.label(class_='image-label') }}<br>
+                    {{ form.image(class_='button')}}<br>
+                </div> 
+                <p class='form-submit'>{{ form.submit() }}</p>
+            </form>
+        </div>
         {% endblock %}
     </body>
 </html>

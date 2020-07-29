@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+:root {
+    --primary: #5628EE;
+    --success: #41D071;
+    --grey-light: #99A3BA;
+    --grey: #6C7486;
+    --grey-dark: #3F4656;
+    --light: #CDD9ED;
+    --lighter: #E4ECFA;
+    --shadow: rgba(18, 22, 33, .1);
+}
 
 #lds-grid {
     display: inline-block;
@@ -6,8 +18,315 @@
     height: 80px;
 }
 
+.top-bar { 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: space-between; 
+    position: relative; 
+    text-align: center;
+    color: #F1EFF2;
+}
+
+.text-input { 
+    border-radius: 10px; 
+    width: 200px;
+}
+
+.form-contents { 
+    display: flex; 
+    width: 30%; 
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input[type=submit] { 
+   background-color: #404244;
+   border: none;
+   border-radius: 4px;
+   color: #F8F6F9;
+   text-align: center;
+   font-family: 'Dosis';
+   width: 100px;
+   height: 40px;
+   transition: .15s ease-out;
+}
+
+input[type=submit]:hover { 
+    box-shadow: 0px 2px 6px -2px #333;
+    cursor: pointer;
+}
+
+img { 
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+}
+
+#uploaded { 
+    width: 30%;
+    height: 30%;
+    margin: 0;
+}
+
+#image-api { 
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}  
+
+#image-wrapper { 
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+#starter-image { 
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#range {
+    margin-top: 0;
+}
+
+#range2 { 
+    margin-top: 0;
+}
+
+#submit { 
+    background-color: #404244;
+    border: none;
+    border-radius: 4px;
+    color: #F8F6F9;
+    text-align: center;
+    font-family: 'Dosis';
+    width: 100px;
+    height: 40px;
+    transition: .15s ease-out;
+ }
+ 
+#submit:hover { 
+     box-shadow: 0px 2px 6px -2px #333;
+     cursor: pointer;
+ }
+
+/* *,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+} */
+/* 
+input[type=file] { 
+    background-color: #404244;
+    border: none;
+    border-radius: 4px;
+    color: #F8F6F9;
+    text-align: center;
+    font-family: 'Dosis';
+    overflow: hidden;
+} */
+
+.fill-out-form { 
+    display: flex; 
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px -6px #111;  
+    background-color: #F8F6F9;
+    width: 35%; 
+    height: 70%; 
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.dimmer { 
+    margin-top: 0;
+    font-size: 15px;
+    font-style: normal;
+    margin-bottom: 20px;
+    color: #EBEBEB;
+}
+
+.form-wrapper { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.button-wrap { 
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#back { 
+    background-color: #404244;
+    border: none;
+    border-radius: 4px;
+    color: #F8F6F9;
+    text-align: center;
+    font-family: 'Dosis';
+    width: 100px;
+    height: 40px;
+    transition: .15s ease-out;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+}
+
+#back:hover { 
+    box-shadow: 0px 2px 6px -2px #333;
+    cursor: pointer;
+}
+
+#thanks { 
+    margin: 0 auto;
+    width: 400px; 
+    height: 150px;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px -6px #111;  
+    background-color: #F8F6F9;
+    padding: 20px;
+}
+
+#request-complete { 
+    margin: 0;
+}
+
+#home { 
+    background-color: #404244;
+    border: none;
+    border-radius: 4px;
+    color: #F8F6F9;
+    text-align: center;
+    font-family: 'Dosis';
+    width: 100px;
+    height: 40px;
+    transition: .15s ease-out;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home:hover { 
+    box-shadow: 0px 2px 6px -2px #333;
+    cursor: pointer;
+}
+
+.label-desc { 
+    margin: 0;
+}
+
+.header-text {
+    color: #F1EFF2;
+    font-style: bold;
+}
+
+.description { 
+    font-style: normal;
+    font-size: 15px;
+}
+
+.info { 
+    margin-top: 0;
+    font-size: 15px;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+
 body { 
-    background-color: #75BDB9;
+    background-color: #8FAAA6;
+    font-family: 'Dosis';
+}
+input[type=file] { 
+    display: none;
+}
+
+.image-label::-webkit-file-upload-button {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.form-button { 
+    margin-bottom: 0;
+}
+
+.image-label:focus { 
+    outline: none;
+}
+
+.image-label::before {
+    content: 'Choose an image';
+    font-family: 'Dosis';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+}
+.image-label:hover::before {
+    border-color: black;
+}
+.image-label:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+#setup { 
+    margin: 0 auto;
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: space-between;
+    width: 50%; 
+    height: 80%; 
+    border-radius: 10px;
+    background-color: #F8F6F9;
+    box-shadow: 0px 4px 20px -6px #111;
+    z-index: 0;  
+}
+
+.range-wrap {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 #lds-grid div {
@@ -15,7 +334,7 @@ body {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #fff;
+    background: rgb(196, 196, 196);
     animation: lds-grid 1.2s linear infinite;
 }
 
@@ -74,8 +393,11 @@ body {
 }
 
 #uploaded { 
-    width: 50%;
-    height: 50%;
+    width: 80%;
+    height: 80%;
+    overflow: hidden;
+    object-fit: cover;
+    z-index: 3;
 }
 
 @keyframes lds-grid {
@@ -85,5 +407,85 @@ body {
     50% {
         opacity: 0.5;
     }
+}
+
+.Input {
+    position: relative;
+    margin-bottom: 0;
+}
+  
+.Input-text {
+    display: block;
+    margin: 0;
+    padding: var(--inputPaddingV) var(--inputPaddingH);
+    background-color: #EBEBEB;
+    width: 200px;
+    font-family: inherit;
+    font-size: var(--inputFontSize);
+    font-weight: inherit;
+    line-height: var(--inputLineHeight);
+    border: none;
+    border-radius: 3px;
+    transition: box-shadow var(--transitionDuration);
+    padding: 3px;
+    -moz-box-shadow:    inset 0 0 1px #444;
+    -webkit-box-shadow: inset 0 0 1px #444;
+    box-shadow:         inset 0 0 1px #444;
+}
+
+.Input-text::placeholder {
+    color: #B0BEC5;
+}
+
+.Input-text:focus {
+    outline: none;
+    box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
+}
+
+.Input-label {
+    display: block;
+    position: absolute;
+    bottom: 50%;
+    left: 1rem;
+    color: #fff;
+    font-family: inherit;
+    font-size: var(--inputFontSize);
+    font-weight: inherit;
+    line-height: var(--inputLineHeight);
+    opacity: 0;
+    transform: 
+    translate3d(0, var(--labelDefaultPosY), 0)
+    scale(1);
+    transform-origin: 0 0;
+    transition:
+    opacity var(--inputTransitionDuration) var(--inputTransitionTF),
+    transform var(--inputTransitionDuration) var(--inputTransitionTF),
+    visibility 0ms var(--inputTransitionDuration) var(--inputTransitionTF),
+    z-index 0ms var(--inputTransitionDuration) var(--inputTransitionTF);
+}
+
+label { 
+    margin-bottom: 20px;
+    padding: 5px;
+    font-style: normal;
+}
+
+.Input-text:placeholder-shown + .Input-label {
+    visibility: hidden;
+    z-index: -1;
+}
+
+.Input-text:not(:placeholder-shown) + .Input-label,
+.Input-text:focus:not(:placeholder-shown) + .Input-label {
+    visibility: visible;
+    z-index: 1;
+    opacity: 1;
+    transform:
+    translate3d(0, var(--labelTransformedPosY), 0)
+    scale(var(--labelScaleFactor));
+    transition:
+    transform var(--inputTransitionDuration),
+    visibility 0ms,
+    z-index 0ms;
 }
   

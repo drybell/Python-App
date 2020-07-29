@@ -69,9 +69,14 @@ def home():
 		try: 
 			headers = {'Accept': 'application/vnd.onshape.v1+json', 'Content-Type': 'application/json'}
 			test_api_call = '/api/featurestudios/d/did/w/wid/e/eid'
-			test_api_call = test_api_call.replace("did", str(form.did._value()))
-			test_api_call = test_api_call.replace("wid", str(form.wid._value()))
-			test_api_call = test_api_call.replace("eid", str(form.eid._value()))
+			url = str(form.url._value()).split('/')
+			did_url = url[4]
+			wid_url = url[6]
+			eid_url = url[8]
+			print(did,wid,eid)
+			test_api_call = test_api_call.replace('did', did_url)
+			test_api_call = test_api_call.replace('wid', wid_url )
+			test_api_call = test_api_call.replace('eid', eid_url )
 			# print(base_api_url + test_api_call, file=sys.stderr)
 			feature_title = str(form.feature_title._value())
 			filename = secure_filename(form.image.data.filename)
@@ -91,7 +96,7 @@ def home():
 			print(e, file=sys.stderr)
 			flash("Incorrect IDs and/or file format. Try again")
 			return redirect('/')
-		did, wid, eid, image_path = (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_upload_path)
+		did, wid, eid, image_path = (did_url, wid_url, eid_url, image_upload_path)
 		# flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
 		return redirect('/details')
 	return render_template('doc.html', title='Details', form=form)
