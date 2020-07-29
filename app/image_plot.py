@@ -6,6 +6,8 @@ import cv2
 import numpy as np 
 matplotlib.use('Agg')
 
+
+# Convert an image upload to a matplotlib plot, showing any extraneous lines 
 def imageToPlot(image_path, scale=100, thresh=100):
     fig = plt.figure()
     img = cv2.imread(image_path)
