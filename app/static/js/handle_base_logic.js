@@ -75,7 +75,7 @@ callPlot = () => {
   }
   $.ajax({
     type: "GET",
-    url: '/query' + image_path + '/' + scale.value + '/' + thresh.value,
+    url: '/query/' + image_path + '/' + scale.value + '/' + thresh.value,
     success: function(data) {
 
       document.getElementById('image-api').setAttribute('src', data.html);
