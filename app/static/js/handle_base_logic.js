@@ -8,8 +8,14 @@ var thanks = document.getElementById('thanks');
 var error = document.getElementById('error');
 var loading = document.getElementById('lds-grid');
 var rendered = document.getElementById('starter-image');
+var feature_title = document.getElementById('feature_title').innerHTML;
+var did = document.getElementById('did').innerHTML;
+var wid = document.getElementById('wid').innerHTML;
+var eid = document.getElementById('eid').innerHTML;
 var isloading = false; 
 var render_image = true;
+var image_path = document.getElementById('image_path').innerHTML.slice(7);
+var elem = document.createElement("img");
 
 loading.style.display = "none";
 
@@ -29,7 +35,7 @@ submit.addEventListener('click', function (e) {
   }
   $.ajax({
     type: "GET",
-    url: '/sketch/' + scale.value + '/' + thresh.value,
+    url: '/sketch/' + image_path + '/' + feature_title + '/' + did + '/' + wid + '/' + eid + '/' + scale.value + '/' + thresh.value,
     success: function(data) {
       console.log(data.status);
       if (data.status === 200){ 
@@ -60,9 +66,6 @@ thresh.addEventListener('change', function () {
   callPlot(range.value, range2.value);
 })
 
-var image_path = document.getElementById('image_path').innerHTML.slice(8);
-var elem = document.createElement("img");
-var test = 2;
 elem.setAttribute("id", "image-api");
 document.getElementById("image-wrapper").appendChild(elem);
 

@@ -50,21 +50,23 @@ def plot_data(year, month, day, second, file, scale, thresh):
 	html, [x,y] = imageToPlot(file_path, scale, thresh)
 	return jsonify({"html": html, "x": x, "y": y})
 
-@app.route('/sketch/<int:scale>/<int:thresh>', methods= ['GET'])
-def send_sketch_onshape(scale, thresh):
-	global did, wid, eid, image_path, feature_title
+@app.route('/sketch/uploads/<int:year>/<int:month>/<int:day>/<int:second>/<file>/<feature_title>/<did>/<wid>/<eid>/<int:scale>/<int:thresh>', methods= ['GET'])
+def send_sketch_onshape(year, month, day, second, file, feature_title, did, wid, eid, scale, thresh):
+	image_path = app.config['UPLOAD_FOLDER'] + str(year) + '/' + str(month) + '/' + str(day) + '/' + str(second) + '/' + file 
+	feature_title = feature_title.replace("%20", " ")
+	did = did.replace("%20", " ")
+	wid = wid.replace("%20", " ")
+	eid = eid.replace("%20", " ")
 	status = imageToOnshape(key, secret, image_path, feature_title, ids=[did,wid,eid], scale=scale, thresh=thresh)
 	return jsonify({'status': status})
 
 @app.route('/details', methods=['GET'])
 def details():
-	global image_path
-	return render_template('base.html', title='Home', value=image_path[4:])
+	return render_template('base.html', title='Home')
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
 	form = DocumentDetailsForm()
-	global did,wid,eid,image_path, feature_title
 	if form.validate_on_submit():
 		try: 
 			headers = {'Accept': 'application/vnd.onshape.v1+json', 'Content-Type': 'application/json'}
@@ -96,9 +98,8 @@ def home():
 			print(e, file=sys.stderr)
 			flash("Incorrect IDs and/or file format. Try again")
 			return redirect('/')
-		did, wid, eid, image_path = (did_url, wid_url, eid_url, image_upload_path)
 		# flash("DID: %s, WID: %s, EID: %s, IMAGE: %s" % (str(form.did._value()), str(form.wid._value()), str(form.eid._value()), image_path))
-		return redirect('/details')
+		return render_template('base.html', title='Home', value = image_upload_path[4:], feature_title= feature_title, did=did_url, wid=wid_url, eid=eid_url)
 	return render_template('doc.html', title='Details', form=form)
 
 @app.route('/<filename>')
