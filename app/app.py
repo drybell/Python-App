@@ -73,7 +73,7 @@ def home():
 			did_url = url[4]
 			wid_url = url[6]
 			eid_url = url[8]
-			print(did,wid,eid)
+			# print(did,wid,eid)
 			test_api_call = test_api_call.replace('did', did_url)
 			test_api_call = test_api_call.replace('wid', wid_url )
 			test_api_call = test_api_call.replace('eid', eid_url )
@@ -108,4 +108,4 @@ def send_uploaded_file(filename):
 
 if __name__ == "__main__":
 	port = int(os.environ.get('PORT', 5000))
-	app.run(host="0.0.0.0", port=port)
+	app.run(host="0.0.0.0", port=port, threading=True)
