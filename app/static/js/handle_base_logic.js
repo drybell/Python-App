@@ -62,6 +62,7 @@ thresh.addEventListener('change', function () {
 
 var image_path = document.getElementById('image_path').innerHTML.slice(8);
 var elem = document.createElement("img");
+var test = 2;
 elem.setAttribute("id", "image-api");
 document.getElementById("image-wrapper").appendChild(elem);
 
