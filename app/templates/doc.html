@@ -26,7 +26,7 @@
                     {% endfor %}
                 </p>
                 <div class='form-button'>
-                    {{ form.image.label(class_='image-label') }}<br>
+                    <label class="image-label" for="image" data-text="Choose an image"></label><br>
                     {{ form.image(class_='button')}}<br>
                 </div> 
                 <p class='form-submit'>{{ form.submit() }}</p>
@@ -34,4 +34,6 @@
         </div>
         {% endblock %}
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handle_form_logic.js')}}"></script>
 </html>
